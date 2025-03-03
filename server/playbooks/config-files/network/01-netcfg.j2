@@ -1,0 +1,44 @@
+network:
+  version: 2
+  renderer: networkd
+  wifis:
+    wlo1:  # Wi-Fi interface name (ip addr show)
+      dhcp4: false
+      dhcp6: false
+      addresses:
+        - {{ local_network_ips.wireless }}/24 # Static IP address and subnet mask for Wi-Fi
+      routes:
+        - to: default
+          via: {{ local_network_ips.router }} # Router's IP address
+      nameservers:
+        addresses:
+          - 8.8.8.8  # Google DNS (you can add more, like 8.8.4.4 or 1.1.1.1)
+          - 1.1.1.1
+      access-points:
+        "Albatraoz 5GHZ":          # Wi-Fi network name
+          password: "{{ local_network.wifi_password }}"  # Wi-Fi password
+  ethernets:
+    enp2s0: # Wired ethernet interface 1 (ip addr show)
+      dhcp4: false
+      dhcp6: false
+      addresses:
+        - {{ local_network_ips.ethernet_1 }} /24 # Static IP address and subnet mask for ethernet port 1
+      routes:
+        - to: default
+          via: {{ local_network_ips.router }} # Router's IP address
+      nameservers:
+        addresses:
+          - 8.8.8.8  # Google DNS (you can add more, like 8.8.4.4 or 1.1.1.1)
+          - 1.1.1.1
+    enp3s0: # Wired ethernet interface 2 (ip addr show)
+      dhcp4: false
+      dhcp6: false
+      addresses:
+        - {{ local_network_ips.ethernet_2 }}/24 # Static IP address and subnet mask for ethernet port 2
+      routes:
+        - to: default
+          via: {{ local_network_ips.router }} # Router's IP address
+      nameservers:
+        addresses:
+          - 8.8.8.8  # Google DNS (you can add more, like 8.8.4.4 or 1.1.1.1)
+          - 1.1.1.1

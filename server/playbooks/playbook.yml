@@ -1,0 +1,48 @@
+- name: Test Connection
+  hosts: nimbus
+  vars_files:
+    - variables.yml
+    - secrets.yml
+
+  tasks:
+    - name: Ping server
+      ansible.builtin.ping:
+    # - name: Install tools
+    #   ansible.builtin.apt:
+    #     update_cache: true
+    #     package:
+    #       - net-tools
+    #       - network-manager
+    #       - vim
+    #     state: present
+    #   become: true
+    - name: Copy VIM config to host
+      ansible.builtin.copy:
+        src: config-files/vimrc
+        dest: ~/.vimrc
+        mode: '0664' # Give read/write permissions to owner (ansible user) and corresponding group, read-only to others
+    # Configure local network
+    - name: Disable cloud-init network configuration
+      ansible.builtin.copy:
+        src: config-files/network/99-disable-network-config.cfg
+        dest: /etc/cloud/cloud.cfg.d/99-disable-network-config.cfg
+        mode: '0644' # Read/write to owner, read-only to group, read-only to other users
+      become: true
+    # - name: Configure static IP addresses on local network
+    #   ansible.builtin.copy:
+    #     src: config-files/network/01-netcfg.yaml
+    #     dest: /etc/netplan/01-netcfg.yaml
+    #     mode: '0600' # Read/write to owner only
+    #   become: true
+    #   register: netplan_config # Register the output of the task. If the task made any changes, "changed: true" will be set.
+    - name: Configure static IP addresses on local network 2
+      ansible.builtin.template:
+        src: config-files/network/01-netcfg.j2
+        dest: /etc/netplan/01-netcfg.yaml
+        mode: '0600' # Read/write to owner only
+      become: true
+    # - name: Apply network configuration if changes are detected
+    #   ansible.builtin.command:
+    #     cmd: netplan apply
+    #   become: true
+    #   when: netplan_config.changed  # Only run if changed was set to true in previous task.

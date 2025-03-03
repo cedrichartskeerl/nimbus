@@ -1,0 +1,8 @@
+# Ignore vscode settings.
+.vscode/**
+
+# Ignore all files in any secrets directory within the repository.
+secrets/**
+
+# Ignore ansible files containing secret variables.
+**/secrets.yml

@@ -1,0 +1,4 @@
+Run a debug task that prints a variable
+# - name: Debug netplan_config
+#   ansible.builtin.debug:
+#     var: netplan_config

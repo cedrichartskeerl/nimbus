@@ -1,0 +1,5 @@
+local_network_ips:
+  router: 192.168.0.1
+  wireless: 192.168.0.100
+  ethernet_1: 192.168.0.101
+  ethernet_2: 192.168.0.102
