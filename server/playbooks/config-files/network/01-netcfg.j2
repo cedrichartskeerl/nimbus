@@ -22,7 +22,7 @@ network:
       dhcp4: false
       dhcp6: false
       addresses:
-        - {{ local_network_ips.ethernet_1 }} /24 # Static IP address and subnet mask for ethernet port 1
+        - {{ local_network_ips.ethernet_1 }}/24 # Static IP address and subnet mask for ethernet port 1
       routes:
         - to: default
           via: {{ local_network_ips.router }} # Router's IP address

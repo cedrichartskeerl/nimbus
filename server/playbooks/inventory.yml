@@ -1,6 +1,6 @@
 mini_pcs:
   hosts:
     nimbus:
-      ansible_host: 192.168.0.103
+      ansible_host: 192.168.0.100
       ansible_port: 22
       ansible_user: dmc

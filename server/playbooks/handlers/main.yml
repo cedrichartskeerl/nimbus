@@ -1,0 +1,6 @@
+- name: Apply network config
+  ansible.builtin.command:
+    cmd: netplan apply
+  become: true
+  changed_when: false # Not considering this a change, as reloading a service doesn't change the state of the system in a meaningful way.
+  # when: result.changed  # Only run if a change was made in tasks calling on this handler. Not needed, making this a notified task turns it into a handler, which performs this check implicitly.
